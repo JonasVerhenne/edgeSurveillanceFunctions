@@ -23,13 +23,10 @@ namespace CloudFunctions
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-
             var account = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("blobStorageConnectionString"));// connectionstring
-            log.LogInformation("connected to blob");
             var client = account.CreateCloudBlobClient();
             var container = client.GetContainerReference("images");// container name
             var blob = container.GetBlockBlobReference(id);// name of image
-            log.LogInformation("found image");
 
             var stream = new MemoryStream();
             await blob.DownloadToStreamAsync(stream);
