@@ -11,6 +11,8 @@ using Microsoft.WindowsAzure.Storage;
 using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Text;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace CloudFunctions
 {
@@ -23,10 +25,10 @@ namespace CloudFunctions
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            var account = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("blobStorageConnectionString"));// connectionstring
-            var client = account.CreateCloudBlobClient();
-            var container = client.GetContainerReference("images");// container name
-            var blob = container.GetBlockBlobReference(id);// name of image
+            CloudStorageAccount account = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("blobStorageConnectionString"));// connectionstring
+            CloudBlobClient client = account.CreateCloudBlobClient();
+            CloudBlobContainer container = client.GetContainerReference("images");// container name
+            CloudBlockBlob blob = container.GetBlockBlobReference(id);// name of image
 
             var stream = new MemoryStream();
             await blob.DownloadToStreamAsync(stream);
@@ -34,7 +36,7 @@ namespace CloudFunctions
 
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
             result.Content = new StreamContent(stream);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
 
             return result;
         }
