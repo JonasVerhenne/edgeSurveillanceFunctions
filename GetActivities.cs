@@ -33,7 +33,7 @@ namespace CloudFunctions
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection; //zeggen via welke connectie de commando's moeten gaan
-                    string sql = "SELECT * FROM Activities";
+                    string sql = "SELECT * FROM Activities ORDER BY time DESC";
                     command.CommandText = sql; //commando toevoegen
 
                     //SqlDataReader: SQL statements uitvoeren en data ophalen
