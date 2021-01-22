@@ -49,13 +49,13 @@ namespace CloudFunctions
         }
 
         [FunctionName("SendDirectMethod-GetStatus")]
-        public static async Task<string> RunGet(
+        public static async Task<Dictionary<string, string>> RunGet(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "status/{deviceId}")] HttpRequest req, string deviceId,
             ILogger log)
         {
             // get status of security system
             log.LogInformation("C# HTTP trigger function processed a request.");
-            string status = "";
+            Dictionary<string, string> status = new Dictionary<string, string>();
             try
             {
                 //via ServiceClient communiceren met iot hub
@@ -68,7 +68,7 @@ namespace CloudFunctions
                 var response = await serviceClient.InvokeDeviceMethodAsync(deviceId, "EdgeModule", method);
                 var jsonResponse = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.GetPayloadAsJson());
                 log.LogInformation(jsonResponse["Status"]);
-                status = jsonResponse["Status"];
+                status.Add("status", jsonResponse["Status"].ToString());
             }
             catch (Exception ex)
             {
