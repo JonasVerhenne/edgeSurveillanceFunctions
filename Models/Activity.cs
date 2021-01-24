@@ -8,7 +8,7 @@ namespace CloudFunctions.Models
     class Activity
     {
         public string Id { get; set; }
-        public string Time { get; set; }
+        public DateTime Time { get; set; }
         public string Location { get; set; }
         [JsonProperty(PropertyName = "person_detected")]
         public bool PersonDetected { get; set; }

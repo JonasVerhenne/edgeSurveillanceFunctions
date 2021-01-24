@@ -28,7 +28,6 @@ namespace CloudFunctions
 
             string newGuid = Guid.NewGuid().ToString();
             activity.Id = newGuid;
-            DateTime time = DateTime.Parse(activity.Time);
 
             //SqlConnection: maken van connectie naar sql database server
             using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("sqlConnectionString"))) //connectionString uit local.settings.json
@@ -42,7 +41,7 @@ namespace CloudFunctions
                                                      //@: variabele in SQL
                     command.CommandText = "INSERT INTO Activities VALUES (@id, @time, @location, @person_detected, @image1, @image2)";
                     command.Parameters.AddWithValue("@id", activity.Id);
-                    command.Parameters.AddWithValue("@time", time);
+                    command.Parameters.AddWithValue("@time", activity.Time);
                     command.Parameters.AddWithValue("@location", activity.Location);
                     command.Parameters.AddWithValue("@person_detected", activity.PersonDetected);
                     command.Parameters.AddWithValue("@image1", activity.Image1);
