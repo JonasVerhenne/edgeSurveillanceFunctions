@@ -73,7 +73,7 @@ namespace CloudFunctions
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection; //zeggen via welke connectie de commando's moeten gaan
-                    string sql = "SELECT * FROM Activities WHERE person_detected = @classification";
+                    string sql = "SELECT * FROM Activities WHERE person_detected = @classification ORDER BY time DESC";
                     command.CommandText = sql; //commando toevoegen
                     command.Parameters.AddWithValue("@classification", classification);
 
