@@ -43,7 +43,7 @@ namespace CloudFunctions
                         activityList.Add(new Activity()
                         {
                             Id = reader["id"].ToString(),
-                            Time = DateTime.Parse(reader["time"].ToString()),
+                            Time = reader["time"].ToString(),
                             Location= reader["location"].ToString(),
                             PersonDetected = bool.Parse(reader["person_detected"].ToString()),
                             Image1 = reader["image1"].ToString(),
@@ -84,7 +84,7 @@ namespace CloudFunctions
                         activityList.Add(new Activity()
                         {
                             Id = reader["id"].ToString(),
-                            Time = DateTime.Parse(reader["time"].ToString()),
+                            Time = reader["time"].ToString(),
                             Location = reader["location"].ToString(),
                             PersonDetected = bool.Parse(reader["person_detected"].ToString()),
                             Image1 = reader["image1"].ToString(),
